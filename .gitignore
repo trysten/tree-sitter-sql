@@ -1,0 +1,5 @@
+binding.gyp
+build/
+node_modules/
+src/
+grammar.js

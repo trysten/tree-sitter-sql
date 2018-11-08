@@ -1,0 +1,25 @@
+{
+  "name": "tree-sitter-sql",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "nodemon -V --watch gulpfile.coffee --exec gulp",
+    "build": "coffee -c grammar.coffee; node-gyp rebuild"
+  },
+  "author": "trysten",
+  "license": "ISC",
+  "dependencies": {
+    "coffeescript": "^2.3.2",
+    "nan": "^2.11.1",
+    "tree-sitter-cli": "^0.13.10"
+  },
+  "devDependencies": {
+    "ansi-colors": "^3.2.1",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-coffee": "^3.0.3",
+    "nodemon": "^1.18.5"
+  }
+}
