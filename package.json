@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "gulp": "nodemon -V --watch gulpfile.coffee --exec gulp",
-    "build": "coffee -c grammar.coffee; node-gyp rebuild"
+    "build": "coffee -c grammar.coffee; tree-sitter generate; node-gyp rebuild",
+    "parse": "tree-sitter parse test.sql"
   },
   "author": "trysten",
   "license": "ISC",
