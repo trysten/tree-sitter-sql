@@ -1,1 +1,5 @@
-SELECT title, author, FROM Book;
+SELECT
+title,
+author
+FROM
+Book;

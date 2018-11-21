@@ -1,0 +1,22 @@
+============================================
+Sequence Expression 
+============================================
+SELECT
+author,
+title
+FROM
+books;
+
+----
+
+(source_file
+  (statement
+    (clause
+      (clause_keyword)
+      (sequence_expression
+        (column_identifier)
+        (delim)
+        (column_identifier)))
+    (clause
+      (clause_keyword)
+      (column_identifier))))
