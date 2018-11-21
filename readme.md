@@ -8,8 +8,12 @@ Right now I can't figure out how to process an extra comma as in:
                 ^
 
 ### build/run ###
+
  1. clone the repository
+
     git clone https://github.com/trysten/tree-sitter-sql.git
+
  1. build the parser
+
     npm -i 
     npm run build
