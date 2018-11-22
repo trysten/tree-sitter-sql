@@ -11,6 +11,7 @@ gulp.task 'js', () ->
 gulp.task 'default', () ->
     gulp.watch 'grammar.coffee', ['coffee']
     gulp.watch 'grammar.js', ['tree-sitter-generate']
+    gulp.watch 'src/parser.c', ['node-gyp-rebuild']
 
 gulp.task 'clean', () ->
     gulp.src(['./src'
@@ -34,5 +35,11 @@ gulp.task 'tree-sitter-generate', (cb) ->
     exec 'tree-sitter generate', (err) ->
         if err
             log(err.message)
+        cb()
+
+gulp.task 'node-gyp-rebuild', (cb) ->
     exec 'node-gyp rebuild', (err) ->
+        if err
+            log("node-gyp error")
+            log(err.message)
         cb()

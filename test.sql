@@ -1,5 +1,4 @@
 SELECT
 title,
-author
 FROM
-Book;
+books;
