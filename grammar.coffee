@@ -6,39 +6,17 @@ module.exports = grammar
     name: 'SQL'
     conflicts: ($) => [
     ]
-    # word: ($) => $._identifier
+    word: ($) => $._identifier
     rules:
-        source_file: ($) => repeat $.statement
-        statement: ($) => seq repeat1($.clause), ';'
+        statement: ($) => seq $.select, $.columns, $.from, $.table, ';'
+        columns: ($) => seq $.column, optional choice seq(',', $.column), $.columns
+        column: ($) => choice 'title', 'author'
+        select: ($) => 'SELECT'
+        from: ($) => 'FROM'
+        table: ($) => 'books'
 
-        clause: ($) => seq $.clause_keyword, $._expressions
-
-        clause_keyword: ($) => #prec PREC.CLAUSE,
-            choice "WHERE", "SELECT", "FROM", "UPDATE", "SET"
-
-        column_identifier: ($) => choice $._identifier, seq($.table, '.', $._identifier )
-
-        _expressions: ($) => choice $._expression, $.sequence_expression
-
-        _expression: ($) => choice(
-          $.column_identifier,
-          $.asterisk,
-          $.string,
-          $.number
-        )
-
-        sequence_expression: ($) => #prec PREC.COMMA,
-            seq $._expression, $.delim,
-                choice $._expression, $.sequence_expression
-
-        delim: ($) => ','
-        table: ($) => $._identifier
-
-        number: ($) => /\d+\.*\d*/
-        string: ($) => choice /"\w+"/, /'\w+'/
-        _identifier: ($) =>
+        identifier: ($) =>
             alpha = /[a-zA-Z_]+/
             alphanum = /[\w_]+/
             token seq alpha, repeat(alphanum)
 
-        asterisk: ($) => '*'
