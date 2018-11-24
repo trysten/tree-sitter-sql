@@ -1,0 +1,16 @@
+===============
+Extra Comma test
+===============
+SELECT Author, FROM Books;
+
+---
+
+(source_file
+ (select)
+ (column)
+  (column)
+  (error
+   (delim))
+  (from)
+  (table))
+test.sql        0 ms    ERROR [0, 0] - [4, 0]

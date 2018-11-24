@@ -1,21 +1,25 @@
-PREC =
-    COMMA: 0
-    CLAUSE: 0
-
 module.exports = grammar
     name: 'SQL'
     conflicts: ($) => [
+        [$.column, $.delim]
     ]
     word: ($) => $._identifier
     rules:
+        # Let's process a single select statement
         statement: ($) => seq $.select, $.columns, $.from, $.table, ';'
-        columns: ($) => seq $.column, optional choice seq(',', $.column), $.columns
-        column: ($) => choice 'title', 'author'
-        select: ($) => 'SELECT'
-        from: ($) => 'FROM'
-        table: ($) => 'books'
+        # assume there is one column
+        columns: ($) => seq $.column,
+            repeat seq $.delim, $.column
 
-        identifier: ($) =>
+        # below simplified for example
+        select: ($) => 'SELECT'
+        column: ($) => $._identifier
+        from: ($) => 'FROM'
+        table: ($) => $._identifier
+
+        delim: ($) => ','
+
+        _identifier: ($) =>
             alpha = /[a-zA-Z_]+/
             alphanum = /[\w_]+/
             token seq alpha, repeat(alphanum)
