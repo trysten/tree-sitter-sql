@@ -14,13 +14,14 @@
   "dependencies": {
     "coffeescript": "^2.5.1",
     "nan": "^2.14.2",
-    "node-gyp": "^3.8.0",
-    "tree-sitter-cli": "^0.13.16"
+    "node-gyp": "^7.1.2",
+    "tree-sitter": "^0.19.0",
+    "tree-sitter-cli": "^0.19.4"
   },
   "devDependencies": {
     "ansi-colors": "^3.2.4",
     "del": "^3.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-coffee": "^3.0.3",
     "nodemon": "^1.19.4"
   }
