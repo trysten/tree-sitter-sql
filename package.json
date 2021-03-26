@@ -12,16 +12,16 @@
   "author": "trysten",
   "license": "ISC",
   "dependencies": {
-    "coffeescript": "^2.3.2",
-    "nan": "^2.11.1",
+    "coffeescript": "^2.5.1",
+    "nan": "^2.14.2",
     "node-gyp": "^3.8.0",
-    "tree-sitter-cli": "^0.13.10"
+    "tree-sitter-cli": "^0.13.16"
   },
   "devDependencies": {
-    "ansi-colors": "^3.2.1",
+    "ansi-colors": "^3.2.4",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-coffee": "^3.0.3",
-    "nodemon": "^1.18.5"
+    "nodemon": "^1.19.4"
   }
 }

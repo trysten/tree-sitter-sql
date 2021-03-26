@@ -1,0 +1,16 @@
+===============
+Extra Comma test
+===============
+SELECT Author, FROM Books;
+
+---
+
+(source_file
+ (statement
+ (column)
+  (column_identifier)
+  (error
+   (delim))
+  (from)
+  (table)))
+

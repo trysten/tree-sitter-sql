@@ -1,6 +1,6 @@
 PREC =
-    COMMA: 0
-    CLAUSE: 0
+    COMMA: -1
+    CLAUSE: 1
 
 module.exports = grammar
     name: 'SQL'
@@ -11,12 +11,14 @@ module.exports = grammar
         source_file: ($) => repeat $.statement
         statement: ($) => seq repeat1($.clause), ';'
 
-        clause: ($) => seq $.clause_keyword, $._expressions
+        clause: ($) => seq prec.dynamic(1, $.clause_keyword),
+                           $._expressions
 
-        clause_keyword: ($) => #prec PREC.CLAUSE,
+        clause_keyword: ($) => prec.dynamic PREC.CLAUSE,
             choice "WHERE", "SELECT", "FROM", "UPDATE", "SET"
 
-        column_identifier: ($) => choice $._identifier, seq($.table, '.', $._identifier )
+        column_identifier: ($) => choice $._identifier,
+                                         seq($.table, '.', $._identifier )
 
         _expressions: ($) => choice $._expression, $.sequence_expression
 
@@ -27,7 +29,7 @@ module.exports = grammar
           $.number
         )
 
-        sequence_expression: ($) => #prec PREC.COMMA,
+        sequence_expression: ($) => prec PREC.COMMA,
             seq $._expression, $.delim,
                 choice $._expression, $.sequence_expression
 
