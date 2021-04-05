@@ -21,15 +21,22 @@ tree_sitter_generate = (cb) ->
         console.log(stderr)
         cb(err)
 
+tree_sitter_test = (cb) ->
+    exec 'tree-sitter test', (err, stdout, stderr) ->
+        console.log(stdout)
+        console.log(stderr)
+        cb(err)
+
 compile_coffeescript = (cb) ->
     src('grammar.coffee')
         .pipe(coffee())
-        .pipe(dest('./grammar.js'))
+        .pipe(dest('./', { overwrite: true }))
     cb()
 
 
 grammar_watch = (cb) ->
-    watch('./grammar.coffee', compile_coffeescript)
+    watch('./grammar.coffee', series(compile_coffeescript, tree_sitter_generate, tree_sitter_test))
+    #series(compile_coffeescript, tree_sitter_generate, tree_sitter_test)
     cb()
 
 # shouldn't be any need for a cleaning function

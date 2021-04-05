@@ -1,7 +1,7 @@
 PREC =
     COMMA: -1
     CLAUSE: 1
-
+# rough sketch for an SQL grammar
 module.exports = grammar
     name: 'SQL'
     conflicts: ($) => [
@@ -11,15 +11,18 @@ module.exports = grammar
         source_file: ($) => repeat $.statement
         statement: ($) => seq repeat1($.clause), ';'
 
+        # give clause a higher priority 
         clause: ($) => seq prec.dynamic(1, $.clause_keyword),
                            $._expressions
 
         clause_keyword: ($) => prec.dynamic PREC.CLAUSE,
             choice "WHERE", "SELECT", "FROM", "UPDATE", "SET"
 
+        # column name or table.name
         column_identifier: ($) => choice $._identifier,
                                          seq($.table, '.', $._identifier )
 
+        # give the choice between a single expression or the beginning of a sequence
         _expressions: ($) => choice $._expression, $.sequence_expression
 
         _expression: ($) => choice(

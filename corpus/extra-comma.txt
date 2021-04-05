@@ -1,16 +1,21 @@
-===============
+================================================================================
 Extra Comma test
-===============
-SELECT Author, FROM Books;
+================================================================================
+SELECT
+Author
+,
+FROM
+Books
+;
 
----
+--------------------------------------------------------------------------------
 
 (source_file
- (statement
- (column)
-  (column_identifier)
-  (error
-   (delim))
-  (from)
-  (table)))
-
+  (statement
+    (clause
+      (clause_keyword)
+      (column_identifier))
+      (ERROR (delim))
+    (clause
+      (clause_keyword)
+      (column_identifier))))
