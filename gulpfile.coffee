@@ -1,42 +1,42 @@
-gulp = require 'gulp'
+{ src, dest, watch, series } = require 'gulp'
 coffee = require 'gulp-coffee'
-c = require 'ansi-colors'
-log = require 'fancy-log'
 exec = require('child_process').exec
 del = require 'del'
 debug = true
-gulp.task 'js', () ->
-    console.log("hi, doing js")
 
-gulp.task 'default', ['node-gyp-rebuild'], () ->
-    gulp.watch 'grammar.coffee', ['node-gyp-rebuild'], options: debounceDelay: 5000
+clean = () ->
+    del(['./src', './build'])
 
-gulp.task 'clean', () ->
-        del(['./src','./build'])
+    #why did I have node-gyp rebuild?
+    # it doesn't seem useful for tree-sitter > 4.0.0
+node_gyp_rebuild = (cb) ->
+    exec 'node-gyp rebuild', (err, stdout, stderr) ->
+        console.log(stdout)
+        console.log(stderr)
+        cb(err)
 
-gulp.task 'coffee', ['clean'], () ->
-    gulp.src 'grammar.coffee'
-        .pipe coffee({bare: true})
-        .on 'error', (error) ->
-            log(c.red('omg, like, an error'))
-            #log(error)
-            log(error.message)
-            log('in ' + error.filename + ' on line:' + c.red error.location.first_line)
-            this.emit('end')
-            #show = (m) ->
-            #    log c.green "L: " + m.location.lastLine + " C: " + m.lastColumn + " in: " + file.path
-        .pipe gulp.dest('./')
+tree_sitter_generate = (cb) ->
+    exec 'tree-sitter generate', (err, stdout, stderr) ->
+        console.log(stdout)
+        console.log(stderr)
+        cb(err)
 
-gulp.task 'tree-sitter-generate', ['coffee'], (cb) ->
-    exec 'tree-sitter generate', (err) ->
-        if err
-            log(err.message)
-        else cb()
+compile_coffeescript = (cb) ->
+    src('grammar.coffee')
+        .pipe(coffee())
+        .pipe(dest('./grammar.js'))
+    cb()
 
-gulp.task 'node-gyp-rebuild', ['tree-sitter-generate'], (cb) ->
 
-    exec 'node-gyp rebuild', (err) ->
-        if err
-            log("node-gyp error")
-            log(err.message)
-        cb()
+grammar_watch = (cb) ->
+    watch('./grammar.coffee', compile_coffeescript)
+    cb()
+
+# shouldn't be any need for a cleaning function
+clean = (cb) ->
+    del(['./build', './bindings', '.src'])
+    cb()
+
+exports.generate = tree_sitter_generate
+#exports.watch = watch
+exports.default = grammar_watch

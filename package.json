@@ -2,7 +2,7 @@
   "name": "tree-sitter-sql",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "bindings/node",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "gulp": "nodemon -V --watch gulpfile.coffee --exec gulp",
@@ -23,6 +23,6 @@
     "del": "^3.0.0",
     "gulp": "^4.0.2",
     "gulp-coffee": "^3.0.3",
-    "nodemon": "^1.19.4"
+    "nodemon": "^2.0.7"
   }
 }
